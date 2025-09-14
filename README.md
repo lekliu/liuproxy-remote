@@ -77,7 +77,7 @@ docker run -d \
 
 ---
 
-## 在PaaS平台（如Railway）上部署
+## 在PaaS平台上部署
 
 `liuproxy-remote`可以轻松部署到任何支持Docker的PaaS平台。
 
@@ -85,11 +85,11 @@ docker run -d \
 2.  在Railway上创建一个新项目，并连接到您Fork的仓库。
 3.  Railway会自动检测`Dockerfile`并进行构建和部署。
 4.  **无需配置`PORT`环境变量**，程序会自动使用Railway提供的端口。
-5.  在Railway服务的"Networking"选项卡中，获取您的公共域名（例如 `my-remote.up.railway.app`）。
+5.  在Railway服务的"Networking"选项卡中，获取您的公共域名（例如 `my-remote.xxx.xxx.xxx`）。
 
 **客户端配置**:
 当您连接部署在PaaS平台上的`remote`服务时，您的`liuproxy-local`客户端**必须**按如下方式配置：
-*   **Address**: `my-remote.up.railway.app` (您的公共域名)
+*   **Address**: `my-remote.xxx.xxx.xxx` (您的公共域名)
 *   **Port**: `443`
 *   **Scheme**: `wss`
 
@@ -115,7 +115,6 @@ docker run -d \
 
 ## 协议兼容性
 
-本项目与 [`liuproxy-gateway`](https://github.com/your-username/liuproxy-gateway) 和 `liuproxy-android-app` 的**Go Remote**模式完全兼容。
-// --- END OF NEW FILE ---
+本项目与 [`liuproxy-gateway`](https://github.com/lekliu/liuproxy-gateway) 和 `liuproxy-app` 的**Go Remote**模式完全兼容。
 ```
 
