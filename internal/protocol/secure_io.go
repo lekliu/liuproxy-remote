@@ -3,7 +3,7 @@ package protocol
 
 import (
 	"io"
-	"liuproxy_go/internal/core/securecrypt"
+	"liuproxy_remote/internal/core/securecrypt"
 )
 
 // WriteSecurePacket 负责加密、封装并发送一个协议包。

@@ -2,7 +2,7 @@
 package server
 
 import (
-	"liuproxy_go/internal/types"
+	"liuproxy_remote/internal/types"
 	"log"
 	"sync"
 )

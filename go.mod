@@ -1,4 +1,4 @@
-module liuproxy_go
+module liuproxy_remote
 
 go 1.24.1
 

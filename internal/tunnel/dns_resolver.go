@@ -5,13 +5,13 @@ package tunnel
 
 import (
 	"context"
-	"liuproxy_go/internal/core/securecrypt"
+	"liuproxy_remote/internal/core/securecrypt"
 	"log"
 	"net"
 	"time"
 
 	"golang.org/x/net/dns/dnsmessage"
-	"liuproxy_go/internal/protocol"
+	"liuproxy_remote/internal/protocol"
 )
 
 // DNSResolver 负责处理DNS查询请求。

@@ -2,9 +2,10 @@
 package tunnel
 
 import (
+	"log"
 	"sync"
 
-	"liuproxy_go/internal/protocol"
+	"liuproxy_remote/internal/protocol"
 )
 
 // RemoteSessionManager 管理所有来自隧道的远程会话 (RemoteSession)。
@@ -22,14 +23,17 @@ func (sm *RemoteSessionManager) NewTCPSession(streamID uint16, payload []byte, t
 	session := tunnel.NewRemoteSession(streamID, tunnel)
 
 	// payload 已经是解密后的明文元数据，直接交给session处理
-	_, err := session.Connect(payload)
+	targetAddr, err := session.Connect(payload)
 	if err != nil {
 		// 连接目标失败，通知Local端关闭此流
+		log.Printf("[EVIDENCE-REMOTE Session-%d] FAILED to connect to target '%s': %v", streamID, targetAddr, err)
 		_ = tunnel.WritePacket(&protocol.Packet{StreamID: streamID, Flag: protocol.FlagControlCloseStream})
 		return
 	}
 
 	sm.sessions.Store(streamID, session)
+
+	log.Printf("[EVIDENCE-REMOTE Session-%d] Successfully connected to target '%s'. Now sending success signal (Flag 0x02) back to local.", streamID, targetAddr)
 
 	// 连接目标成功，向Local端发送成功响应
 	err = tunnel.WritePacket(&protocol.Packet{StreamID: streamID, Flag: protocol.FlagControlNewStreamTCPSuccess})

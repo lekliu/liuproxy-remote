@@ -2,11 +2,12 @@
 package tunnel
 
 import (
+	"log"
 	"net"
 	"sync"
 	"time"
 
-	"liuproxy_go/internal/protocol"
+	"liuproxy_remote/internal/protocol"
 )
 
 // RemoteSession 代表一个到最终目标服务器的连接。
@@ -57,6 +58,8 @@ func (s *RemoteSession) StartDownstreamLoop() {
 	if s.tunnel == nil || s.tunnel.agent == nil {
 		return
 	}
+
+	log.Printf("[EVIDENCE-REMOTE Session-%d] Now starting to read from target '%s'. Waiting for client data...", s.streamID, s.targetConn.RemoteAddr())
 
 	buf := make([]byte, s.tunnel.agent.bufferSize)
 	for {

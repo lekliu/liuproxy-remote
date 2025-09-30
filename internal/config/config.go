@@ -6,7 +6,7 @@ import (
 	"strconv"
 
 	"gopkg.in/ini.v1"
-	"liuproxy_go/internal/types"
+	"liuproxy_remote/internal/types"
 )
 
 // LoadIni 从指定的 fileName 加载配置到 types.Config 结构体中。

@@ -77,32 +77,5 @@ func ReadPacket(reader io.Reader) (*Packet, error) {
 
 // ReadUnsecurePacket 从 io.Reader 读取并解析一个 Packet，但不进行解密。
 // 专门用于 Worker 策略的下行数据处理。
-func ReadUnsecurePacket(reader io.Reader) (*Packet, error) {
-	lenBuf := make([]byte, 2)
-	if _, err := io.ReadFull(reader, lenBuf); err != nil {
-		if err == io.EOF || err == io.ErrUnexpectedEOF {
-			return nil, io.EOF
-		}
-		return nil, fmt.Errorf("failed to read unsecure packet length: %w", err)
-	}
-
-	packetContentLen := binary.BigEndian.Uint16(lenBuf)
-	if packetContentLen < 3 { // StreamID (2) + Flag (1)
-		return nil, fmt.Errorf("received invalid unsecure packet with content length < 3")
-	}
-
-	data := make([]byte, packetContentLen)
-	if _, err := io.ReadFull(reader, data); err != nil {
-		return nil, fmt.Errorf("failed to read unsecure packet content (expected %d bytes): %w", packetContentLen, err)
-	}
-
-	p := &Packet{
-		StreamID: binary.BigEndian.Uint16(data[0:2]),
-		Flag:     data[2],
-		Payload:  data[3:], // Payload is plaintext
-	}
-	// No decryption step
-	return p, nil
-}
 
 // --- END OF COMPLETE REPLACEMENT ---

@@ -2,11 +2,11 @@
 package tunnel
 
 import (
-	"liuproxy_go/internal/core/securecrypt"
+	"liuproxy_remote/internal/core/securecrypt"
 	"net"
 	"sync"
 
-	"liuproxy_go/internal/protocol"
+	"liuproxy_remote/internal/protocol"
 )
 
 type RemoteTunnel struct {

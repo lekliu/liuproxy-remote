@@ -3,7 +3,7 @@ package tunnel
 
 import (
 	"bufio"
-	"liuproxy_go/internal/types"
+	"liuproxy_remote/internal/types"
 	"net"
 )
 

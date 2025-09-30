@@ -3,8 +3,8 @@ package server
 
 import (
 	"fmt"
-	"liuproxy_go/internal/shared"
-	"liuproxy_go/internal/tunnel"
+	"liuproxy_remote/internal/shared"
+	"liuproxy_remote/internal/tunnel"
 	"log"
 	"net"
 	"net/http"

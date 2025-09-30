@@ -2,11 +2,11 @@ package main
 
 import (
 	"flag"
-	"liuproxy_go/internal/types"
+	"liuproxy_remote/internal/types"
 	"log"
 
-	"liuproxy_go/internal/config"
-	"liuproxy_go/internal/server"
+	"liuproxy_remote/internal/config"
+	"liuproxy_remote/internal/server"
 )
 
 func main() {

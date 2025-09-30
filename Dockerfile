@@ -7,7 +7,7 @@ WORKDIR /app
 
 # 优化依赖缓存：先复制go.mod和go.sum，然后下载依赖
 COPY go.mod go.sum ./
-RUN go mod download
+RUN export GOPROXY=https://goproxy.cn,direct && go mod download
 
 # 复制所有源代码
 COPY . .

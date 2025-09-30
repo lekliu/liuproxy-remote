@@ -7,7 +7,6 @@ import (
 )
 
 // Agent 接口定义了所有代理处理器的通用行为。
-// HandleConnection 接收一个原始连接和一个可能已预读数据的 bufio.Reader。
 // 如果 reader 为 nil，处理器应从 conn 创建自己的 reader。
 // 如果 reader 不为 nil，处理器必须使用这个 reader 来读取初始数据。
 type Agent interface {

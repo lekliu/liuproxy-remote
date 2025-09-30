@@ -8,9 +8,9 @@ import (
 	"sync"
 	"time"
 
-	"liuproxy_go/internal/core/securecrypt"
-	"liuproxy_go/internal/protocol"
-	"liuproxy_go/internal/types"
+	"liuproxy_remote/internal/core/securecrypt"
+	"liuproxy_remote/internal/protocol"
+	"liuproxy_remote/internal/types"
 )
 
 // udpTimeout 定义了 UDP 会话的超时时间
