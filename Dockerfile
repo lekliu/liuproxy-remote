@@ -14,8 +14,7 @@ COPY . .
 
 # 只编译 remote 一个可执行文件
 # 使用 -trimpath 和 -ldflags "-s -w" 来减小最终二进制文件的大小
-RUN CGO_ENABLED=0 GOOS=linux go build -trimpath -ldflags="-s -w" -o /app/bin/remote_server ./cmd/remote
-
+RUN CGO_ENABLED=0 GOOS=linux go build -trimpath -ldflags="-s -w" -o /app/bin/liuproxy-remote ./remote/cmd
 
 # --- STAGE 2: Final Image ---
 # 使用一个干净、最小化的Alpine镜像作为最终镜像
@@ -25,8 +24,8 @@ FROM alpine:latest
 WORKDIR /app
 
 # 只从builder阶段复制编译好的二进制文件和默认配置文件
-COPY --from=builder /app/bin/remote_server .
-COPY configs/remote.ini ./configs/
+COPY --from=builder /app/bin/liuproxy-remote .
+COPY remote/ini/remote.ini ./configs/
 
 # 暴露服务端口 (这主要用于文档目的，Railway等平台会忽略它)
 EXPOSE 10089
@@ -35,4 +34,4 @@ EXPOSE 10089
 # 程序将读取环境变量PORT，如果不存在，则使用配置文件中的port_ws_svr
 
 # CMD ["./remote_server", "--config", "configs/remote.ini"]
-CMD ["sh", "-c", "printenv && ./remote_server --config configs/remote.ini"]
+CMD ["sh", "-c", "printenv && ./liuproxy-remote --config configs/remote.ini"]

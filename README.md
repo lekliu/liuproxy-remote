@@ -26,33 +26,25 @@
 
 ### 1. 使用 `docker-compose` (推荐)
 
-在您的服务器上创建一个`docker-compose.yml`文件：
+在您的服务器上（与 `docker-compose.yml` 同级）创建 `remote/ini/` 目录结构，并放入 `remote.ini` 文件：
 
-```yaml
-version: '3.8'
-
-services:
-  liuproxy-remote:
-    image: your-dockerhub-username/liuproxy-remote:latest # 将其替换为您的Docker Hub镜像
-    container_name: liuproxy_remote_server
-    restart: unless-stopped
-    ports:
-      # 将服务器的 10089 端口映射到容器的 10089 端口
-      - "10089:10089"
-    volumes:
-      # 将本地配置文件挂载到容器中，实现持久化配置
-      - ./remote.ini:/app/configs/remote.ini
+**文件结构**:
+```
+.
+├── docker-compose.yml
+└── remote/
+    └── ini/
+        └── remote.ini
 ```
 
-创建一个`remote.ini`配置文件：
-
+**`remote/ini/remote.ini` 配置文件内容**:
 ```ini
 [common]
 mode = remote
 crypt = 125 ; 确保这个密钥与您的客户端配置一致
 
 [remote]
-port_ws_svr = 10089 ; 容器内部监听的端口
+port = 10089 ; 容器内部监听的端口
 ```
 
 然后启动服务：
@@ -63,19 +55,19 @@ docker-compose up -d
 ### 2. 使用 `docker run`
 
 ```bash
-# 1. 先在当前目录创建一个名为 remote.ini 的配置文件
-#    内容同上
+# 1. 先在当前目录创建 remote/ini 目录并放入 remote.ini 配置文件
+mkdir -p remote/ini
+#    将上述 ini 内容写入 remote/ini/remote.ini
 
 # 2. 运行容器
 docker run -d \
   --name liuproxy_remote_server \
-  -p 10089:10089 \
-  -v $(pwd)/remote.ini:/app/configs/remote.ini \
+  -p 10089:10089/tcp \
+  -p 10089:10089/udp \
+  -v $(pwd)/remote/ini:/app/configs \
   --restart unless-stopped \
   your-dockerhub-username/liuproxy-remote:latest
 ```
-
----
 
 ## 在PaaS平台上部署
 
@@ -116,5 +108,3 @@ docker run -d \
 ## 协议兼容性
 
 本项目与 [`liuproxy-gateway`](https://github.com/lekliu/liuproxy-gateway) 和 `liuproxy-app` 的**Go Remote**模式完全兼容。
-```
-
